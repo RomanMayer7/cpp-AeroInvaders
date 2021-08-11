@@ -1,3 +1,0 @@
-/home/romanmay/Development/CPP_Projects/CPP-Aero-Invaders/build/CMakeFiles/rebuild_cache.dir
-/home/romanmay/Development/CPP_Projects/CPP-Aero-Invaders/build/CMakeFiles/AeroInvadersGame.dir
-/home/romanmay/Development/CPP_Projects/CPP-Aero-Invaders/build/CMakeFiles/edit_cache.dir

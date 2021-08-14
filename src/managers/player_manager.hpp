@@ -111,11 +111,11 @@
   // move gun to the given x coordinate
    void moveGun(int x) {
     if (x <= min_x) {
-      gun->setPosition(gun_min_x, gun_y);
+      gun->setPosition(gun_min_x+gun_width, gun_y);
     } else if (x >= max_x) {
-      gun->setPosition(gun_max_x, gun_y);
+      gun->setPosition(gun_max_x-gun_width, gun_y);
     } else {
-      gun->setPosition(x - gun_width, gun_y);
+      gun->setPosition(x , gun_y);
     }
   }
 

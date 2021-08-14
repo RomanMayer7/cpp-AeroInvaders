@@ -18,7 +18,7 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   // Create Window
-  sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
+  sdl_window = SDL_CreateWindow("Aero Invaders Game", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
 
@@ -75,7 +75,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(/*Snake const snake, SDL_Point const &food*/)
+void Renderer::Render()
  {
   SDL_Rect block;
   block.w = screen_width / grid_width;
@@ -88,14 +88,6 @@ void Renderer::Render(/*Snake const snake, SDL_Point const &food*/)
  SDL_RenderCopy(background_renderer, background_texture, NULL, NULL);
 
 
-  // Render food
-//   RColor _color;
-//   _color.r = 0xFF;
-//   _color.g = 0xCC;
-//   _color.b = 0x00;
-//   _color.a = 0xFF;
-
-//  fillRect(food.x,food.y,block.w,block.h,_color);
 
   /*
   SDL_SetRenderDrawColor(background_renderer, 0xFF, 0xCC, 0x00, 0xFF);
@@ -104,23 +96,6 @@ void Renderer::Render(/*Snake const snake, SDL_Point const &food*/)
   SDL_RenderFillRect(background_renderer, &block);
   */
 
-  // Render snake's body
-  // SDL_SetRenderDrawColor(background_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  // for (SDL_Point const &point : snake.body) {
-  //   block.x = point.x * block.w;
-  //   block.y = point.y * block.h;
-  //  SDL_RenderFillRect(background_renderer, &block);
-  // }
-
-  // Render snake's head
-  // block.x = static_cast<int>(snake.head_x) * block.w;
-  // block.y = static_cast<int>(snake.head_y) * block.h;
-  // if (snake.alive) {
-  //   SDL_SetRenderDrawColor(background_renderer, 0x00, 0x7A, 0xCC, 0xFF);
-  // } else {
-  //   SDL_SetRenderDrawColor(background_renderer, 0xFF, 0x00, 0x00, 0xFF);
-  // }
-  //  SDL_RenderFillRect(background_renderer, &block);
 
   //Render Aircraft
   //SDL_RenderCopy(background_renderer, aircraft_texture, NULL, &texture_rect);
@@ -141,7 +116,7 @@ void Renderer::Render(/*Snake const snake, SDL_Point const &food*/)
 }
 
 void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+  std::string title{"Your Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 

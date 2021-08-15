@@ -20,7 +20,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/infra_classes/headers)
 include_directories(${PROJECT_SOURCE_DIR}/src/infra_classes/)
 link_directories(${PROJECT_SOURCE_DIR}/src/infra_classes/)
 
-add_executable(AeroInvadersGame src/main.cpp src/managers/game_manager.hpp src/managers/player_manager.hpp src/controller.cpp src/infra_classes/rect_sprite.cpp src/infra_classes/bitmap_sprite.cpp src/infra_classes/missle_sprite.cpp src/infra_classes/rcolor.cpp src/infra_classes/player_sprite.cpp src/renderer.cpp )
+add_executable(AeroInvadersGame src/main.cpp src/managers/game_manager.hpp src/managers/player_manager.hpp src/controller.cpp src/infra_classes/rect_sprite.cpp src/infra_classes/bitmap_sprite.cpp src/infra_classes/bitmap_loop.cpp src/infra_classes/missle_sprite.cpp src/infra_classes/rcolor.cpp src/infra_classes/player_sprite.cpp src/renderer.cpp )
 
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(AeroInvadersGame ${SDL2_LIBRARIES}

@@ -32,24 +32,42 @@ Renderer::Renderer(const std::size_t screen_width,
     loadMedia();
     background_texture = SDL_CreateTextureFromSurface(background_renderer, background_surface);
 
-    //std::cerr << "11111111111111.\n";
 
     aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
+
+    enemy_textures= new SDL_Texture *[6];
+
+    for(int i=0;i<6;i++)
+    {
+       // std::string filePath = "../img/ufo"+(i+1)+".bmp";
+        std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
+       std::cout<<filePath<<std::endl;
+       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
+
+    }
+
     texture_rect;
-    texture_rect.x = 700;  //the x coordinate
-    texture_rect.y = 500; // the y coordinate
+    texture_rect.x = 350;  //the x coordinate
+    texture_rect.y = 100; // the y coordinate
     texture_rect.w = 51; //the width of the texture
     texture_rect.h = 92; //the height of the texture
     
-    //std::cerr << "222222222222222222.\n";
     //aircraftSprite=new BitmapSprite();
 
-     aircraftSprite=new BitmapSprite( 700,500,texture_rect,aircraft_texture);
-     aircraftSprite_two=new BitmapSprite( 500,500,texture_rect,aircraft_texture);
+     //aircraftSprite=new BitmapSprite( 700,500,texture_rect,aircraft_texture);
+     //aircraftSprite_two=new BitmapSprite( 500,500,texture_rect,aircraft_texture);
+
+    enemySpriteLoop_one =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
+    texture_rect.x = 500;  //the x coordinate
+    texture_rect.y = 120; // the y coordinate
+    enemySpriteLoop_two =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
+    texture_rect.x = 400;  //the x coordinate
+    texture_rect.y = 150; // the y coordinate
+    enemySpriteLoop_three =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
      //aircraftSprite_three=new PlayerSprite( 600,600,texture_rect,aircraft_texture);
 
      //BitmapSprite aircraftSprite_( 700,500,texture_rect,aircraft_texture);
-      //std::cerr << "333333333333333333.\n";
+     texture_rect.x = 500; 
 
 
   if (nullptr == sdl_window) {
@@ -101,13 +119,21 @@ void Renderer::Render()
   //SDL_RenderCopy(background_renderer, aircraft_texture, NULL, &texture_rect);
 
   
-   // aircraftSprite->paint_g(background_renderer);
+     // aircraftSprite->paint_g(background_renderer);
     //aircraftSprite_two->paint_g(background_renderer);
 
     //std::cerr << "rfsfsfsssssssssss.\n";
     //aircraftSprite_three->paint_g(background_renderer);
     //std::cout<< "Aircraft Position |Renderer  x: "<<aircraftSprite_three->getLocX()<<" ,y:"<<aircraftSprite_three->getLocY()<<std::endl;
 
+    enemySpriteLoop_one->paint_g(background_renderer);
+    enemySpriteLoop_one->update();
+
+    enemySpriteLoop_two->paint_g(background_renderer);
+    enemySpriteLoop_two->update();
+
+    enemySpriteLoop_three->paint_g(background_renderer);
+    enemySpriteLoop_three->update();
  
   // Update Screen
  //SDL_RenderPresent(background_renderer);

@@ -8,6 +8,7 @@
 #include "./infra_classes/headers/rcolor.hpp"
 #include "./infra_classes/headers/bitmap_sprite.hpp"
 #include "./infra_classes/headers/player_sprite.hpp"
+#include "./infra_classes/headers/bitmap_loop.hpp"
 
 
 
@@ -27,6 +28,9 @@ class Renderer {
   BitmapSprite *aircraftSprite;
   BitmapSprite *aircraftSprite_two;
   PlayerSprite *aircraftSprite_three;
+  BitmapLoop *enemySpriteLoop_one;
+  BitmapLoop *enemySpriteLoop_two;
+  BitmapLoop *enemySpriteLoop_three;
 
 
 
@@ -35,6 +39,7 @@ class Renderer {
    //The image we will load and show on the screen
     SDL_Texture* background_texture = NULL;
     SDL_Texture* aircraft_texture;
+    SDL_Texture** enemy_textures;
     SDL_Rect texture_rect;
     SDL_Renderer* background_renderer;
 

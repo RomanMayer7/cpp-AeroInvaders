@@ -84,7 +84,7 @@
     gun_max_x = width - 2 * gun_width;
     mis_min_x = min_x - 2;
     mis_max_x = max_x - 2;
-    gun->setPosition(width / 2 - gun_width, gun_y); //set Aircraft in Center of Screen
+    //gun->setPosition(width / 2 - gun_width, gun_y); //set Aircraft in Center of Screen
 
        //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
 

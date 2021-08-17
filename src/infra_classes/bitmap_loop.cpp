@@ -15,7 +15,7 @@
       visible=true;
       active=true;
 
-		  if (texture_img != NULL) 
+		  if (texture_images != NULL) 
         {
           texture_rect.x = x;  //the x coordinate
           texture_rect.y = y; // the y coordinate

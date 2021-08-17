@@ -58,12 +58,9 @@ Renderer::Renderer(const std::size_t screen_width,
      //aircraftSprite_two=new BitmapSprite( 500,500,texture_rect,aircraft_texture);
 
     enemySpriteLoop_one =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
-    texture_rect.x = 500;  //the x coordinate
-    texture_rect.y = 120; // the y coordinate
-    enemySpriteLoop_two =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
-    texture_rect.x = 400;  //the x coordinate
-    texture_rect.y = 150; // the y coordinate
-    enemySpriteLoop_three =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
+    enemySpriteLoop_two =new BitmapLoop(500,120,texture_rect,enemy_textures,6);
+    enemySpriteLoop_three =new BitmapLoop(400,150,texture_rect,enemy_textures,6);
+    
      //aircraftSprite_three=new PlayerSprite( 600,600,texture_rect,aircraft_texture);
 
      //BitmapSprite aircraftSprite_( 700,500,texture_rect,aircraft_texture);

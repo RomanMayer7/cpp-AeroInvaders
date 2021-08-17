@@ -36,21 +36,34 @@ Renderer::Renderer(const std::size_t screen_width,
     aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
 
     enemy_textures= new SDL_Texture *[6];
+    enemy_attack_textures= new SDL_Texture *[6];
+    enemy_explode_textures= new SDL_Texture *[18];
 
     for(int i=0;i<6;i++)
     {
-       // std::string filePath = "../img/ufo"+(i+1)+".bmp";
-        std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
-       std::cout<<filePath<<std::endl;
-       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
 
+       std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
+       std::string filePath2{"../img/attack" + std::to_string(i+1) + ".bmp"};
+       //std::cout<<filePath<<std::endl;
+       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
+       enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
     }
+
+    for(int i=0;i<18;i++)
+    {
+       std::string filePath3{"../img/Explosion" + std::to_string(i+1) + ".bmp"};
+       //std::cout<<filePath3<<std::endl;
+       enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
+    }
+    
+    
 
     texture_rect;
     texture_rect.x = 350;  //the x coordinate
     texture_rect.y = 100; // the y coordinate
     texture_rect.w = 51; //the width of the texture
     texture_rect.h = 92; //the height of the texture
+
     
     //aircraftSprite=new BitmapSprite();
 
@@ -123,6 +136,7 @@ void Renderer::Render()
     //aircraftSprite_three->paint_g(background_renderer);
     //std::cout<< "Aircraft Position |Renderer  x: "<<aircraftSprite_three->getLocX()<<" ,y:"<<aircraftSprite_three->getLocY()<<std::endl;
 
+/*
     enemySpriteLoop_one->paint_g(background_renderer);
     enemySpriteLoop_one->update();
 
@@ -131,6 +145,7 @@ void Renderer::Render()
 
     enemySpriteLoop_three->paint_g(background_renderer);
     enemySpriteLoop_three->update();
+*/
  
   // Update Screen
  //SDL_RenderPresent(background_renderer);
@@ -138,8 +153,8 @@ void Renderer::Render()
 
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Your Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+void Renderer::UpdateWindowTitle(int score, int fps, int level) {
+  std::string title{"Your Score: " + std::to_string(score) + "      FPS: " + std::to_string(fps) + "      LEVEL: " + std::to_string(level)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 
@@ -196,7 +211,7 @@ void Renderer::fillRect(int locx,int locy,int width,int height,RColor &color)
   SDL_SetRenderDrawColor(background_renderer, color.r, color.g, color.b, color.a);
   block.x = locx ;
   block.y = locy ;
-  std::cout << "Renderer::fillRect:"<<locx<<" locy:"<<locy<<" width:"<<width<<" height:"<<height<<" color r:"<<color.r<<"\n";
+  //std::cout << "Renderer::fillRect:"<<locx<<" locy:"<<locy<<" width:"<<width<<" height:"<<height<<" color r:"<<color.r<<"\n";
   SDL_RenderFillRect(background_renderer, &block);
   // SDL_RenderPresent(background_renderer);
 

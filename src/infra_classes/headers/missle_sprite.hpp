@@ -3,6 +3,9 @@
 #include "rect_sprite.hpp"
 #include "intersect.hpp"
 #include "rcolor.hpp"
+#include "../headers/enemy_sprite.hpp"
+
+class EnemySprite;
 
 class MissileSprite: public RectSprite {
     
@@ -12,6 +15,7 @@ class MissileSprite: public RectSprite {
         int stop_y; // stop at y coord
 
         Intersect** target;
+		EnemySprite** e_target;
 	    Intersect** target2;
 	    Intersect* onetarget;
 
@@ -23,6 +27,9 @@ class MissileSprite: public RectSprite {
 	MissileSprite();
 	//*******************Constructor for one group of enemies (targets)
 	MissileSprite(int w,int h,RColor* c,int _vy, int _start_y,int _stop_y,Intersect** _target);
+
+		//*******************Constructor for one group of enemies (targets)
+	MissileSprite(int w,int h,RColor* c,int _vy, int _start_y,int _stop_y,EnemySprite** _target);
 
 	//*********************Constructor for one target(player's ship)
 	MissileSprite(int w,int h,RColor* c,int _vy,int _start_y,int _stop_y,Intersect* _target);

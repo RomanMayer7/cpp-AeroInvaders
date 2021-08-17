@@ -20,7 +20,7 @@
           texture_rect.x = x;  //the x coordinate
           texture_rect.y = y; // the y coordinate
         }
-        
+  
          currentImage = 0;
 
    }
@@ -43,8 +43,19 @@
      //std::cout<<"bitmap_loop render777";
       if (visible) 
       {
-        //std::cout<<"bitmap_loop render";
-        SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+        if(!finalizing)
+        //TODO:Hardcoded values-Take care of
+        {
+           texture_rect.w=51;
+           texture_rect.h=92;
+          SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+        }
+        else
+        {
+           texture_rect.w=130;
+           texture_rect.h=125;
+           SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+        }
 
       }
    }
@@ -55,6 +66,8 @@
     {
      locx = x;
      locy = y;
+     texture_rect.x = x;  //the x coordinate
+     texture_rect.y = y; // the y coordinate
     }
 
     void BitmapLoop::setVelocity(int x, int y)
@@ -68,4 +81,6 @@
     {
       locx += vx;
       locy += vy;
+      texture_rect.x = locx;  //the x coordinate
+      texture_rect.y = locy; // the y coordinate
     }

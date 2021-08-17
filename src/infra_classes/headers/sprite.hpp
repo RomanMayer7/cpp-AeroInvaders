@@ -2,6 +2,7 @@
 //#include "../../headers/renderer.h"
 #include "SDL.h"
 #include "./infra_classes/headers/rcolor.hpp"
+//#include<iostream>
 
 
  // abstract class
@@ -35,6 +36,7 @@ protected:
   // suspend the sprite
    void suspend()
   {
+    //std::cout<<"Suspend Sprite"<<std::endl;
     setVisible(false);
     setActive(false);
   }

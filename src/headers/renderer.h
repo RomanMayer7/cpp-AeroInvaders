@@ -20,7 +20,7 @@ class Renderer {
   ~Renderer();
 
   void Render(/*Snake const snake, SDL_Point const &food*/);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int score, int fps, int level);
   bool loadMedia();
   void draw_rectangle(SDL_Surface* surface, int x, int y, int width, int height);
   void fillRect(int locx,int locy,int width,int height,RColor &color);
@@ -40,6 +40,9 @@ class Renderer {
     SDL_Texture* background_texture = NULL;
     SDL_Texture* aircraft_texture;
     SDL_Texture** enemy_textures;
+    SDL_Texture** enemy_attack_textures;
+    SDL_Texture** enemy_explode_textures;
+
     SDL_Rect texture_rect;
     SDL_Renderer* background_renderer;
 

@@ -5,7 +5,7 @@
 #include "intersect.hpp"
 #include <iostream>
 
-class PlayerSprite : public BitmapSprite,Moveable,Intersect 
+class PlayerSprite : public BitmapSprite,public Moveable,public Intersect 
 {
 	//protected GunManager gm; // pointer to manager class
 public:

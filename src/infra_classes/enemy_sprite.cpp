@@ -6,12 +6,13 @@ void EnemySprite::landingRoutine()
          // tell game manager that  Enemy aircraft has landed
          game->alienLanded(); 
         
-          suspend();
+         suspend();
        }
 
 void EnemySprite::startStandby()
        {
-         vx = getRand(8) - 4;
+         //vx = getRand(8) - 4;
+         vx = getRand(5) - 2;
          vy = 0;
          state = STANDBY;
        }
@@ -19,8 +20,10 @@ void EnemySprite::startStandby()
       // start attack state
 void EnemySprite::startAttack()
        {
-         vx = getRand(10) - 5;
-         vy = getRand(5) + 7;
+         //vx = getRand(10) - 5;
+         //vy = getRand(5) + 7;
+          vx = getRand(3) - 2;
+          vy = getRand(1) + 1;
          texture_images = attack_images; // change to attack animation loop
          state = ATTACK;
        }
@@ -29,7 +32,8 @@ void EnemySprite::startAttack()
 void EnemySprite::startRetreat()
        {
          vx = 0;
-         vy = -getRand(3) - 2;
+         //vy = -getRand(3) - 2;
+         vy = -getRand(2) - 1;
          texture_images = normal_images; // change to usual animation loop
          state = RETREAT;
        }
@@ -37,14 +41,17 @@ void EnemySprite::startRetreat()
 void EnemySprite::startLand()
        {
          vx = 0;
-         vy = getRand(3) + 2;
+         //vy = getRand(3) + 2;
+         vy = getRand(2) + 1;
          state = LAND;
        }
 
       // start explosion state
 void EnemySprite::startExplode() 
        {
+         cout<<"Explode!"<<endl;
          texture_images = explode_images; // set bitmap to explosion sequence
+         finalizing=true;
          currentImage = 0; // start at beginning of animation
          explosion_counter = 0; // count the number of frames
 
@@ -56,7 +63,7 @@ void EnemySprite::startExplode()
 
 EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
          SDL_Texture** enemyImages, SDL_Texture** attackImages,
-         SDL_Texture** explodeImages, int max_x, int max_y, EnemyManager _em,GameManager _gm)
+         SDL_Texture** explodeImages, int max_x, int max_y, EnemyManager* _em,GameManager* _gm)
         :BitmapLoop(x,y,_texture_rect,enemyImages,_num_of_images)
         {
     
@@ -77,15 +84,17 @@ EnemySprite::EnemySprite() {}
         // finish initializing info about the player's gun
 void EnemySprite::initialize(PlayerManager* pm)
         {
-          target = pm->getGun(); // refers to gun sprite
-          player_y = pm->getGunY(); // get gun y-coordinate
+         target = pm->getGun(); // refers to gun sprite
+         player_y = pm->getGunY(); // get gun y-coordinate
         }  
 
         // implement Intersect interface:
 bool EnemySprite::intersect(int x1, int y1, int x2, int y2)
          {
+           //cout<<"Intersect in EnemySprite: x1:"<<x1<<" y1:"<<y1<<" x2:"<<x2<<" y2:"<<y2<<endl;
            return visible && (x2 >= locx) && (locx + width >= x1) &&
                              (y2 >= locy) && (locy + height >= y1);
+                             
          }
 
         // this is called if a missile hits the alien
@@ -95,7 +104,8 @@ void EnemySprite::hit()
            // but it gets "pushed back"
            if (state == ATTACK) 
            {
-              locy -= 37;
+              locy -= 15;
+              locx += 15;
            }
           // otherwise explode!
            else if (state != EXPLODE)
@@ -122,18 +132,27 @@ void EnemySprite::update()
          // if enemy hits target
          if ((locy + height >= player_y) && target->intersect(locx, locy, locx + width, locy + height)) 
               {
+                cout<<"Enemy hit Target"<<endl;
                 target->hit();
                 suspend();
                 return;
               }         
          // otherwise, update Enemy state
          // pick random nums
-         double r1 = fRand(0,1); 
+        double r1 = fRand(0,1); 
          double r2 = fRand(0,1);
-    
+
+        // double r1=10;
+         //double r2=5;
+        //state=1;
+         //cout<<"locy:"<<locy<<endl;
+        //cout<<"State:"<<state<<endl;
+      //if(false)
+      //{
         switch (state) 
         {
           case STANDBY:
+           //cout<<"STANDBY"<<endl;
             if (r1 > STANDBY_EXIT) 
             {
                if (r2 > 0.5) 
@@ -157,6 +176,7 @@ void EnemySprite::update()
           break;
 
           case ATTACK:
+            //cout<<"ATTACK"<<endl;
             // retreat if the enemy flies too close to
             // the ground
             if ((r1 > ATTACK_EXIT) || (locy > player_y - 17)) 
@@ -171,6 +191,7 @@ void EnemySprite::update()
           break;
 
           case RETREAT:
+          //cout<<"RETREAT"<<endl;
             if (r1 > RETREAT_EXIT)
              {
                if (r2 > 0.5)
@@ -191,6 +212,7 @@ void EnemySprite::update()
           break;
 
           case LAND:
+           //cout<<"LAND"<<endl;
             if (r1 > LAND_EXIT)
              {
                startStandby();
@@ -202,6 +224,7 @@ void EnemySprite::update()
           break;
 
           case EXPLODE:
+          cout<<"EXPLODE"<<endl;
             explosion_counter++; // bump counter
            // suspend once animation is finished
            if (explosion_counter == num_of_images)
@@ -210,21 +233,46 @@ void EnemySprite::update()
             }
           break;
        }
+      //}
+       //this->updatePosition();
+       //this->update();
+       //vy=5;
+
        BitmapLoop::update(); // BitmapLoop update draws the appropriate image
     }
     //--------------------this is end of implementation of the 'State Machine'---------------------------------
 
   
-int EnemySprite::getRand(int x) 
+ int EnemySprite::getRand(int x) 
   {
-    srand((unsigned)time(0));
+    //srand((unsigned)time(0));
     int random;
     random = rand() % x + 1;     // v2 in the range 1 to x
     return random;
   }
 
-double EnemySprite::fRand(double fMin, double fMax)
+ double EnemySprite::fRand(double fMin, double fMax)
 {
-    double f = (double)rand() / RAND_MAX;
-    return fMin + f * (fMax - fMin);
+    //double f = (double)rand() / RAND_MAX;
+
+    //double f = ((double)rand() / (double)(RAND_MAX));
+
+    //return fMin + f * (fMax - fMin);
+
+       //double lower_bound = fMin;
+       //double upper_bound = fMax;
+      const double lower_bound = 0.5;
+      const double upper_bound = 1;
+       std::uniform_real_distribution<double> unif(lower_bound, upper_bound); 
+       std::random_device rand_dev;          // Use random_device to get a random seed.
+       std::mt19937 rand_engine(rand_dev()); // mt19937 is a good pseudo-random number 
+                                          // generator.
+     // std::default_random_engine rand_engine(std::chrono::system_clock::now().time_since_epoch().count());
+      double a_random_double = unif(rand_engine);
+
+
+       return a_random_double;
+        //srand(time(NULL));
+
+
 }

@@ -6,7 +6,7 @@
 
 
 
-class BitmapLoop :public BitmapSprite, Moveable 
+class BitmapLoop :public BitmapSprite, public Moveable 
 {
 protected:
    SDL_Texture** texture_images; // sequence of bitmaps
@@ -16,8 +16,10 @@ protected:
    int vy;
   // bool foreground; // are there foreground images?
   // bool background; // is there background image?
+  
 
 public:
+   bool finalizing=false;
   // constructor. Assumes that background image is already loaded. 
    BitmapLoop(int x, int y ,SDL_Rect _texture_rect,SDL_Texture**_texture_images,int _num_of_images);
    BitmapLoop();

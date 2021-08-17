@@ -4,6 +4,8 @@
 #include "../infra_classes/headers/player_sprite.hpp"
 #include "../managers/player_manager.hpp"
 
+class PlayerManager;
+
 class Controller {
  public:
   Controller();

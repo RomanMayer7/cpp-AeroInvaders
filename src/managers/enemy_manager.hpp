@@ -28,18 +28,17 @@ class EnemyManager
   EnemyManager(int _startLevel, int _maxLevel, int _width, int _height,Renderer* _renderer,GameManager* gm);
 
    // allow the EnemyManager class to communicate with the PlayerManger
-   void initialize(PlayerManager* pm);   
-  // accessor method, so the missile knows where
-  // the targets are!
+   void initialize(PlayerManager* pm);
+
+  // accessor method, so the missile knows where the targets are!
    EnemySprite** getEnemies();
 
   // This method tells the EnemySprite class where
-  // the PlayerSprite is (so the EnemySprites know if they’ve
-  // collided with it)
+  // the PlayerSprite is (so the EnemySprites know if they’vecollided with it)
    void newGame();
-  // tracks the number of ufos killed. If the
-  // num_killed is divisible by KILL_FOR_NEXT_LEVEL
-  // increment the level
+
+  // tracks the number  of ufos killed. If the
+  // num_killed is divisible by KILL_FOR_NEXT_LEVEL - increment the level
    void killed();
 
    void setStartLevel(int start);
@@ -48,15 +47,14 @@ class EnemyManager
   // paint all enemies in a level
    void paintAll();
 
-  // update all ufos in a level. Otherwise start
-  // ufo if it's not on screen
+  // update all enemies in a level. Otherwise initiate an enemy if it's not on screen
    void update();
      
    private:
       //Group of Enemies
       EnemySprite** enemies;
       
-      // set ufo at a random screen location
+      // set enemy at a random screen location
       void initializePosition(Moveable* m);
 
 };

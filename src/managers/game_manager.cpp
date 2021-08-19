@@ -14,21 +14,15 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
        std::cout << "GameManager::init().\n";
 
 	
-    //TODO:LLOAD IMAGES
+    //TODO:LOAD IMAGES
     //showStatus("Loading Images -- WAIT!");
 	loadImages();
 	
     //TODO:LOAD AUDIO
-	// try {
-	// 	expsound = getAudioClip(getCodeBase(),"BOMB.WAV");
-	// 	level1sound=getAudioClip(getCodeBase(),"The Shadows - Riders In The Sky.wav");
-	// 	shot=getAudioClip(getCodeBase(),"SHOT.wav");
-	// 	}
-	// catch (Exception e) {System.out.println("The problem with audioclip loading\n"+e.getMessage()); }
 
     em =new EnemyManager(5,MAX_LEVEL,width,height,renderer,this);
-	//pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,reinterpret_cast<Intersect**>(em->getEnemies())/* ,uum.getUFO2()*/);
-	pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,em->getEnemies()/* ,uum.getUFO2()*/);
+	//pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,reinterpret_cast<Intersect**>(em->getEnemies()) );
+	pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,em->getEnemies() );
 
 	controller=new Controller(pm);
 	
@@ -37,23 +31,15 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	
 	playing = false; // not playing
 
-	//MusicPlayer();//call Music Player to load audio track for the Intro
+	//MusicPlayer();//call Music Player to load audio track 
 	
 	}
-	
-	
+		
 	void GameManager::MusicPlayer()
 	 {	
-	    // switch(screen)
-	    //  {
-	    //    case INTRO:introsound.play();
-	    //    break;
-	    //    case GAMEPLAY:introsound.stop();  level1sound.play();
-	    //    break;
-	    //  }
-	  }
-	
 
+	 }
+	
 	// CUSTOMIZE MANAGERS!
 	 void GameManager::setOptions(int startLevel,int energyDec,bool sound)
 	 {
@@ -67,8 +53,7 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	     this->energyDec = energyDec;
 	     pm->setEnergyDec(energyDec); // set energy lost
 	   }
-	   //this.sound = sound;
-	   //um.setSound(sound); // set sound
+
 	 }
 	
 	// increase score
@@ -92,13 +77,12 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 
 	 }
 
-	// GameManager’s newGame():
 	// initialize params for new game
 	 void GameManager::newGame()
 	{
 
 	   playing=true;
-	   score = 0; // no score
+	   score = 0; // no score at start
 	   numLanded = 0; // no aliens landed
        //StartMsg=90;//milliseconds to show starting message
 	   pm->newGame(); // call newGame in
@@ -112,19 +96,15 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	  if (playing) 
 	   {
 	     playing = false;
-	     screen = GAME_OVER;
+	     //screen = GAME_OVER;
 	   }
 	}
 	
  
 	 void GameManager::start() 
 	{
-	    //showStatus("Starting Game!");
-	    //animation = new Thread(this);
-	    //if (animation != null)
-	    //{
-		//   animation.start();
-		//}
+	    //TODO::showStatus("Starting Game!");
+
     }
 
 	// update managers. only update gun if playing
@@ -142,40 +122,19 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	 void GameManager::paint()
 		{
               //std::cerr << "paint()\n";
-		      //offscreen.setColor(Color.white);
-		      //offscreen.fillRect(0,0,width,height); // clear buffer
-
-		      //g.drawImage(cityBG, 0, 0, this);
-
               //draw window with background image
               renderer->Render();
 
 		      // tell UFOManager and GunManager to paint
 		      pm->paint(renderer);  //draw player's aircraft
-			  em->paintAll();//draw enemy aircrafts
-
+			  em->paintAll();       //draw enemy aircrafts
 
               // Update Screen
               SDL_RenderPresent(renderer->background_renderer);
-
-		      //um.paint(renderer->background_renderer));  //draw enemies
 		
 		      // draw status info
-		    //   offscreen.setFont(mediumFont);
-		    //   offscreen.setColor(Color.red);
-		    //   offscreen.drawString(scoreString+score,width - 130,13);
-		    //   offscreen.drawString(ufoLandedString+numLanded,width - 130,27);
-		    //   offscreen.drawString("Level:"+" "+(um.level-1),width/2,13);
 
 		      //draw starting message
-		    //   if (StartMsg>0)
-		    //    {
-		    //      //offscreen.drawString(StartMessage, width/2,height/2);
-		    //        offscreen.drawImage(StartMessageImg, (width/2)-130, (height/2)-60, this);
-		    //        StartMsg--; //decreasing the time to show message
-		    //    }
-
-		    //g.drawImage(image,0,0,this);
 	    
           }
 		
@@ -221,26 +180,10 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
                  SDL_Delay(target_frame_duration - frame_duration);
               }
            }       
-
-		  //while (true) 
-		    //{
-		      //paint();
-		      //updateManagers();
-		      //Thread.currentThread().yield();
-		    //   try 
-		    //    {
-		    //      Thread.sleep (REFRESH_RATE);
-		    //    } 
-		    //   catch (Exception exc) { };
-		    //}
 		}
 		
 		  void GameManager::stop()
 		 {
-		 // showStatus("Game Stopped");
-		//   if (animation != null) 
-		//      {
-		//       animation.stop();
-		//       animation = null;
-		//      }
+		    //TODO:: showStatus("Game Stopped");
+
 		  }

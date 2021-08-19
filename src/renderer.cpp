@@ -28,6 +28,11 @@ Renderer::Renderer(const std::size_t screen_width,
 
 
     background_renderer = SDL_CreateRenderer(sdl_window, -1, 0);
+     if (nullptr == background_renderer) 
+     {
+       std::cerr << "Renderer could not be created.\n";
+       std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+     }
 
     loadMedia();
     background_texture = SDL_CreateTextureFromSurface(background_renderer, background_surface);
@@ -44,7 +49,7 @@ Renderer::Renderer(const std::size_t screen_width,
 
        std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
        std::string filePath2{"../img/attack" + std::to_string(i+1) + ".bmp"};
-       //std::cout<<filePath<<std::endl;
+
        enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
        enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
     }
@@ -52,7 +57,7 @@ Renderer::Renderer(const std::size_t screen_width,
     for(int i=0;i<18;i++)
     {
        std::string filePath3{"../img/Explosion" + std::to_string(i+1) + ".bmp"};
-       //std::cout<<filePath3<<std::endl;
+
        enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
     }
     
@@ -64,37 +69,25 @@ Renderer::Renderer(const std::size_t screen_width,
     texture_rect.w = 51; //the width of the texture
     texture_rect.h = 92; //the height of the texture
 
-    
+    //  **********************FOR TESTS ONLY***********************************************************************************************
     //aircraftSprite=new BitmapSprite();
 
      //aircraftSprite=new BitmapSprite( 700,500,texture_rect,aircraft_texture);
      //aircraftSprite_two=new BitmapSprite( 500,500,texture_rect,aircraft_texture);
 
-    enemySpriteLoop_one =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
-    enemySpriteLoop_two =new BitmapLoop(500,120,texture_rect,enemy_textures,6);
-    enemySpriteLoop_three =new BitmapLoop(400,150,texture_rect,enemy_textures,6);
+    //enemySpriteLoop_one =new BitmapLoop(350,100,texture_rect,enemy_textures,6);
+    //enemySpriteLoop_two =new BitmapLoop(500,120,texture_rect,enemy_textures,6);
+    //enemySpriteLoop_three =new BitmapLoop(400,150,texture_rect,enemy_textures,6);
     
      //aircraftSprite_three=new PlayerSprite( 600,600,texture_rect,aircraft_texture);
 
      //BitmapSprite aircraftSprite_( 700,500,texture_rect,aircraft_texture);
-     texture_rect.x = 500; 
+     //texture_rect.x = 500; 
 
-
-  if (nullptr == sdl_window) {
-    std::cerr << "Window could not be created.\n";
-    std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
-  }
-
-  // Create renderer
-  // sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
-  // if (nullptr == sdl_renderer) {
-  //   std::cerr << "Renderer could not be created.\n";
-  //   std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
-  // }
 
     //Get window surface
     //gScreenSurface = SDL_GetWindowSurface( sdl_window );
-
+   //  **********************FOR TESTS ONLY***********************************************************************************************
 
 }
 
@@ -118,6 +111,7 @@ void Renderer::Render()
 
 
   /*
+  **********************FOR TESTS ONLY***********************************************************************************************
   SDL_SetRenderDrawColor(background_renderer, 0xFF, 0xCC, 0x00, 0xFF);
   block.x = food.x * block.w;
   block.y = food.y * block.h;
@@ -149,7 +143,7 @@ void Renderer::Render()
  
   // Update Screen
  //SDL_RenderPresent(background_renderer);
-
+  //**********************FOR TESTS ONLY***********************************************************************************************
 
 }
 
@@ -213,6 +207,5 @@ void Renderer::fillRect(int locx,int locy,int width,int height,RColor &color)
   block.y = locy ;
   //std::cout << "Renderer::fillRect:"<<locx<<" locy:"<<locy<<" width:"<<width<<" height:"<<height<<" color r:"<<color.r<<"\n";
   SDL_RenderFillRect(background_renderer, &block);
-  // SDL_RenderPresent(background_renderer);
 
 }

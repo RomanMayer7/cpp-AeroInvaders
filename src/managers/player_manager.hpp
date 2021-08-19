@@ -25,11 +25,8 @@
    int gun_height;
    
     MissileSprite* missile[3];
-   //MissileSprite missile[3];// = new MissileSprite[3]; // missile
   
-
-   /*static */int width, height; // game window  dimensions
-   //static GameManager game;
+   int width, height; // game window  dimensions
    int min_x, max_x; // min and max x coords
 
   // for player's sprite movement
@@ -43,15 +40,13 @@
    int energyDec;
    RColor* MISSILE_COLOR; //Red Color by Default
 
-  //AudioClip shotsound;
   public:
 
    PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
                     /* ,Intersect** target2*/ );
 
 
-   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target
-                    /* ,Intersect** target2*/ );
+   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target);
     
    void newGame();
   // move gun to the given x coordinate

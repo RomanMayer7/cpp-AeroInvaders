@@ -27,16 +27,14 @@ EnemyManager::EnemyManager(int _startLevel, int _maxLevel, int _width, int _heig
         EnemySprite::initialize(pm);
       }
     
-  // accessor method, so the missile knows where
-  // the targets are!
+  // accessor method, so the missile knows where the targets are!
    EnemySprite** EnemyManager::getEnemies()
     {
       return enemies;
     }
 
-  // This method tells the EnemySprite class where
-  // the PlayerSprite is (so the EnemySprites know if they’ve
-  // collided with it)
+  // This method tells the EnemySprite class where the PlayerSprite is 
+  //(so the EnemySprites know if they’ve collided with it)
    void EnemyManager::newGame() 
   {
     enemiesKilled = 0;
@@ -44,17 +42,15 @@ EnemyManager::EnemyManager(int _startLevel, int _maxLevel, int _width, int _heig
     // on the screen
     for (int i = 0; i < NUM_OF_ENEMIES; i++) {
       initializePosition(enemies[i]);
-      if (i >= level) { // suspend enemies
-        // above start level
+      if (i >= level) { // suspend enemies above the start level
         enemies[i]->suspend();
 
       }
     }
 
   }
-  // tracks the number of ufos killed. If the
-  // num_killed is divisible by KILL_FOR_NEXT_LEVEL
-  // increment the level
+  // tracks the number of enemies killed. If the
+  // num_killed is divisible by KILL_FOR_NEXT_LEVEL - increment the level
    void EnemyManager::killed() 
    {
     enemiesKilled++;
@@ -85,8 +81,7 @@ EnemyManager::EnemyManager(int _startLevel, int _maxLevel, int _width, int _heig
      }
   }
 
-  // update all ufos in a level. Otherwise start
-  // ufo if it's not on screen
+  // update all enemie in a level. Otherwise initiate an enemy if it's not on screen
    void EnemyManager::update() 
    {
     for (int i = 0; i < level; i++) 
@@ -105,7 +100,7 @@ EnemyManager::EnemyManager(int _startLevel, int _maxLevel, int _width, int _heig
     }
   }
      
-  // set ufo at a random screen location
+  // set enemy at a random screen location
   void EnemyManager::initializePosition(Moveable* m) 
       {
           int random1=EnemySprite::getRand(width - 100) + 50;

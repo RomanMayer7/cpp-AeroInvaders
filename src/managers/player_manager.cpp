@@ -1,5 +1,7 @@
  #include "player_manager.hpp"
- 
+
+
+ //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
  PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
                     /* ,Intersect** target2*/ ) 
     {
@@ -15,18 +17,11 @@
     MISSILE_COLOR=new RColor(255,0,0,255);
     
 
-    //this.shotsound = shotsound;
-    //game = (GameManager) a;
-
     //*****************************************************************
-
-    // gun = new PlayerSprite(gunImage, a, this);
     //SDL_Rect player_texture_rect;
     //player_texture_rect.w = 51; //the width of the texture
     //player_texture_rect.h = 92; //the height of the texture
-
     gun=new PlayerSprite( 600,600,renderer->texture_rect,renderer->aircraft_texture);
-
 
     //*****************************************************************
 
@@ -41,9 +36,9 @@
     gun_max_x = width - 2 * gun_width;
     mis_min_x = min_x - 2;
     mis_max_x = max_x - 2;
-    //gun->setPosition(width / 2 - gun_width, gun_y); //set Aircraft in Center of Screen
 
-       //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
+    //gun->setPosition(width / 2 - gun_width, gun_y); //set Aircraft in Center of Screen
+    //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
 
     //INITIALIZE MISSLES for Player
 
@@ -55,9 +50,9 @@
      
   }
 
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
 
-   PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target
-                    /* ,Intersect** target2*/ ) 
+   PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target)
     {
     
     
@@ -71,12 +66,8 @@
     MISSILE_COLOR=new RColor(255,0,0,255);
     
 
-    //this.shotsound = shotsound;
-    //game = (GameManager) a;
-
     //*****************************************************************
 
-    // gun = new PlayerSprite(gunImage, a, this);
     //SDL_Rect player_texture_rect;
     //player_texture_rect.w = 51; //the width of the texture
     //player_texture_rect.h = 92; //the height of the texture
@@ -98,8 +89,7 @@
     mis_min_x = min_x - 2;
     mis_max_x = max_x - 2;
     //gun->setPosition(width / 2 - gun_width, gun_y); //set Aircraft in Center of Screen
-
-       //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
+    //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
 
     //INITIALIZE MISSLES for Player
 
@@ -110,7 +100,7 @@
      }
      
   }
-
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
 
 
    void PlayerManager::newGame() 
@@ -182,10 +172,9 @@
 
 
   // Update all the parameters associated with the
-  // Player(gun). In this case, only the Missle needs to move
+  // Player. In this case, only the Missle needs to move
   // automatically. Aircraft is moved by player
-  //Also the gun manager checks if the
-  // missile hits anything
+  //Also the gun manager checks if the missile hits anything
    void PlayerManager::update() {
     for (int i = 0; i < 3; i++) {
       missile[i]->update();
@@ -196,14 +185,13 @@
 
    void PlayerManager::paint(Renderer* g)
   {
-    // if gun is hit, flash a red rectangle
+    // TODO::if gun is hit, flash a red rectangle
     // instead of painting gun
-
+    //PSEUDOCODE EXAMPLE
     // if (displayHit) {
     //   g.setColor(Color.red);
     //   g.fillRect(0, gun_y, width, gun_height);
     //   displayHit = false;
-      //std::cout << "PlayerManager::paint().\n";
     // } else {
       gun->paint_g(g->background_renderer);
   //}
@@ -214,7 +202,8 @@
       missile[i]->paint(g);         
     }
 
-    // display energy left
+    // TODO::display energy left
+    //PSEUDOCODE EXAMPLE
     //g.setColor(Color.red);
     //g.drawString(energyString, 3, 13);
     //g.fillRect(0, 17, energy, 10);

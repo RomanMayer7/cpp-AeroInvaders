@@ -19,7 +19,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(/*Snake const snake, SDL_Point const &food*/);
+  void Render();
   void UpdateWindowTitle(int score, int fps, int level);
   bool loadMedia();
   void draw_rectangle(SDL_Surface* surface, int x, int y, int width, int height);

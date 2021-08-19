@@ -23,30 +23,17 @@
  class GameManager
  {
 
-	//Graphics offscreen;
-	//Image image;
-	//Image ufoImages[] = new Image[3]; // 3 ufo Images
-	//Image attackImages[] = new Image[3]; // 3 attack Images
-	//Image explodeImages[] = new Image[18];// 18 explode Images
-	//Image ufo2Images[]=new Image[1];
-	//Image ufo2atckImages[]=new Image[1];
-
-	//Image cityBG;//Background Image
-	
     //int StartMsg=90;//milliseconds to show starting message
-
     //std::string StartMessage="Go!!";//starting message
-    //Image StartMessageImg;//alternative image starting message
-    
-	//Image gunImages[]=new Image[5]; // player aircraft images
 	//AudioClip expsound; // explosion sound
 	//AudioClip shot; //when shooting
-	
+	//int screen; // which screen to show
+
     private:
-	// state of game
+	// state of the game
 	bool playing; 
     int score;
-	int screen; // which screen to show
+	
     
     Renderer* renderer;
 	Controller* controller;
@@ -60,13 +47,11 @@
 	std::string  ufoLandedString = "Enemies passed: ";
 	std::string  gameOverString = " GAME OVER ";
 	std::string  gameName = "AERO INVADERS";
-	int stringWidth;
-	std::string  clickString = "Shift-Click to Continue";
-	//std::string  introString[11];
-	
+	//int stringWidth;
+	//std::string  clickString = "Shift-Click to Continue";
+	//std::string  introString;
 	
 	int width, height; // window dimensions
-	
 	
 	// customizable parameters
 	int startLevel;
@@ -75,8 +60,6 @@
 	bool sound;
 	std::size_t target_frame_duration;
 	//***********************************************************************************************************
-	//Intersect** target=nullptr; 
-	//Intersect** target2=nullptr;;
 
     public:
 

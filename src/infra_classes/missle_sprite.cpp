@@ -86,7 +86,7 @@
              {
 	            if (locy < stop_y)
                 {
-				 std::cout<<"suspend!"<<std::endl;
+				 //std::cout<<"suspend!"<<std::endl;
 		         suspend();
                 }
 		     }

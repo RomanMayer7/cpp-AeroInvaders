@@ -114,7 +114,7 @@ void EnemySprite::hit()
            else if (state != EXPLODE)
            {
              startExplode(); // start explode state
-             em->killed(); // tell UFOManager
+             em->killed(); // tell EnemyManager
              game->incrementScore(); // add to score
             // another UFO's dead
             }
@@ -136,7 +136,8 @@ void EnemySprite::update()
          if ((locy + height >= player_y) && target->intersect(locx, locy, locx + width, locy + height)) 
               {
                 cout<<"Enemy hit Target"<<endl;
-                target->hit();
+                hit(); //Tell Enemy it's been colided with target (destroys enemy)
+                target->hit(); //Tell Target(Player) it has been hitted by Enemy(reduces Energy from Player)
                 suspend();
                 return;
               }         

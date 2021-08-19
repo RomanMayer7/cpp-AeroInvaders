@@ -3,8 +3,10 @@
 
 void EnemySprite::landingRoutine() 
        {
+          cout<<"Start Landing Routine"<<endl;
          // tell game manager that  Enemy aircraft has landed
-         game->alienLanded(); 
+         game->alienLanded();
+         cout<<"ENEMY HAS LANDED!"<<endl;
         
          suspend();
        }
@@ -40,6 +42,7 @@ void EnemySprite::startRetreat()
 
 void EnemySprite::startLand()
        {
+         cout<<"Start Landing!"<<endl;
          vx = 0;
          //vy = getRand(3) + 2;
          vy = getRand(2) + 1;
@@ -49,7 +52,7 @@ void EnemySprite::startLand()
       // start explosion state
 void EnemySprite::startExplode() 
        {
-         cout<<"Explode!"<<endl;
+         //cout<<"Explode!"<<endl;
          texture_images = explode_images; // set bitmap to explosion sequence
          finalizing=true;
          currentImage = 0; // start at beginning of animation
@@ -63,12 +66,12 @@ void EnemySprite::startExplode()
 
 EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
          SDL_Texture** enemyImages, SDL_Texture** attackImages,
-         SDL_Texture** explodeImages, int max_x, int max_y, EnemyManager* _em,GameManager* _gm)
+         SDL_Texture** explodeImages, int _max_x, int _max_y, EnemyManager* _em,GameManager* _gm)
         :BitmapLoop(x,y,_texture_rect,enemyImages,_num_of_images)
         {
     
-           max_x = max_x;
-           max_y = max_y;
+           max_x = _max_x;
+           max_y = _max_y;
            em = _em;
            game = _gm;
 
@@ -140,14 +143,9 @@ void EnemySprite::update()
          // otherwise, update Enemy state
          // pick random nums
         double r1 = fRand(0,1); 
-         double r2 = fRand(0,1);
+        double r2 = fRand(0,1);
 
-        // double r1=10;
-         //double r2=5;
-        //state=1;
-         //cout<<"locy:"<<locy<<endl;
-        //cout<<"State:"<<state<<endl;
-      //if(false)
+      //if(false) //TEST
       //{
         switch (state) 
         {
@@ -158,6 +156,7 @@ void EnemySprite::update()
                if (r2 > 0.5) 
                {
                   startAttack();
+                   cout<<"Start Attack"<<endl;
                }
                else 
                {
@@ -219,6 +218,7 @@ void EnemySprite::update()
              } 
              else if (locy >= max_y - height) 
              {
+               cout<<"locy: "<<locy<<" max_y: "<<max_y<<" height: "<<height<<endl;
                landingRoutine();
              }
           break;
@@ -253,26 +253,25 @@ void EnemySprite::update()
 
  double EnemySprite::fRand(double fMin, double fMax)
 {
+  //*******  OLD C Style APPROACH **********
     //double f = (double)rand() / RAND_MAX;
 
     //double f = ((double)rand() / (double)(RAND_MAX));
 
     //return fMin + f * (fMax - fMin);
+    //***********************************************************
 
-       //double lower_bound = fMin;
-       //double upper_bound = fMax;
-      const double lower_bound = 0.5;
-      const double upper_bound = 1;
+       double lower_bound = fMin;
+       double upper_bound = fMax;
+       //*******TEST PROBABILITY by overriding these values**********
+      //const double lower_bound = 0.49;
+      //const double upper_bound = 1;
+      //***********************************************************
        std::uniform_real_distribution<double> unif(lower_bound, upper_bound); 
        std::random_device rand_dev;          // Use random_device to get a random seed.
-       std::mt19937 rand_engine(rand_dev()); // mt19937 is a good pseudo-random number 
-                                          // generator.
-     // std::default_random_engine rand_engine(std::chrono::system_clock::now().time_since_epoch().count());
+       std::mt19937 rand_engine(rand_dev()); // mt19937 is a good pseudo-random number generator.
       double a_random_double = unif(rand_engine);
 
-
        return a_random_double;
-        //srand(time(NULL));
-
 
 }

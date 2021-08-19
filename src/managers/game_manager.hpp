@@ -10,8 +10,8 @@
 #define INTRO 0 // intro screen
 #define GAME_OVER 1 // game over screen
 #define GAMEPLAY 2
-#define UFO_VALUE 130 // 130 points
-#define MAX_LANDED 5 // at most 5 alienscan land
+#define UFO_VALUE 130 // 130 points per enemy
+#define MAX_LANDED 5 // at most 5 enemies can land
 #define MAX_LEVEL 9 //
 #define MAX_ENERGY 113 
 

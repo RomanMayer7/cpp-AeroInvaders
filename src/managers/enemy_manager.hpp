@@ -34,7 +34,7 @@ class EnemyManager
    EnemySprite** getEnemies();
 
   // This method tells the EnemySprite class where
-  // the PlayerSprite is (so the EnemySprites know if they’vecollided with it)
+  // the PlayerSprite is (so the EnemySprites know if they’ve collided with it)
    void newGame();
 
   // tracks the number  of ufos killed. If the

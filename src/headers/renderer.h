@@ -20,7 +20,8 @@ class Renderer {
   ~Renderer();
 
   void Render();
-  void UpdateWindowTitle(int score, int fps, int level);
+  void UpdateWindowTitle(int score, int fps, int level, int enemiesLanded);
+  void UpdateWindowTitleEndGame(int score, int level,int enemiesLanded);
   bool loadMedia();
   void draw_rectangle(SDL_Surface* surface, int x, int y, int width, int height);
   void fillRect(int locx,int locy,int width,int height,RColor &color);

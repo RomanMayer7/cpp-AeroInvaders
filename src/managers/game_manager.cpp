@@ -96,6 +96,8 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	  if (playing) 
 	   {
 	     playing = false;
+		  cout<<"GAME OVER"<<endl;
+		  renderer->UpdateWindowTitleEndGame(score,currentLevel,numLanded);
 	     //screen = GAME_OVER;
 	   }
 	}
@@ -166,9 +168,9 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
               frame_duration = frame_end - frame_start;
 
               // After every second, update the window title.
-              if (frame_end - title_timestamp >= 1000)
+              if ((frame_end - title_timestamp >= 1000)&&(playing))
 			   {
-                  renderer->UpdateWindowTitle(score, frame_count,currentLevel);
+                  renderer->UpdateWindowTitle(score, frame_count,currentLevel,numLanded);
                   frame_count = 0;
                   title_timestamp = frame_end;
                }

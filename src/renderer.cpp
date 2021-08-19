@@ -147,8 +147,17 @@ void Renderer::Render()
 
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps, int level) {
-  std::string title{"Your Score: " + std::to_string(score) + "      FPS: " + std::to_string(fps) + "      LEVEL: " + std::to_string(level)};
+void Renderer::UpdateWindowTitle(int score, int fps, int level,int enemiesLanded) {
+  std::string title{"Your Score: " + std::to_string(score) + "      FPS: " + std::to_string(fps) + "      LEVEL: " + std::to_string(level)+
+                    "      ENEMIES LANDED: " + std::to_string(enemiesLanded)};
+
+  SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+void Renderer::UpdateWindowTitleEndGame(int score, int level,int enemiesLanded) {
+  std::string title{"Your Score: " + std::to_string(score) + "     GAME OVER   " + "      LEVEL: " + std::to_string(level)+
+                    "      ENEMIES LANDED: " + std::to_string(enemiesLanded)};
+
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 

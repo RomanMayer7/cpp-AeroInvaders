@@ -114,8 +114,8 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 	{
 	  if (playing) 
 	   {
-	     pm->update(); //update PlayerManager
-		 em->update();  //update GameManager
+	     pm->update();  //update PlayerManager
+		 em->update();  //update EnemyManager
 	   }
 	    
 	}
@@ -155,9 +155,9 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 		    {
               frame_start = SDL_GetTicks();
               // Input, Update, Render - the main game loop.
-              controller->HandleInput(running/*, snake*/);
+              controller->HandleInput(running);
               //Update();
-              renderer->Render(/*snake, food*/);
+              renderer->Render();
 			  paint();
 		      updateManagers();
               frame_end = SDL_GetTicks();

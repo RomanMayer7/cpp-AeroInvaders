@@ -37,32 +37,6 @@ Renderer::Renderer(const std::size_t screen_width,
     loadMedia();
     background_texture = SDL_CreateTextureFromSurface(background_renderer, background_surface);
 
-
-    aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
-
-    enemy_textures= new SDL_Texture *[6];
-    enemy_attack_textures= new SDL_Texture *[6];
-    enemy_explode_textures= new SDL_Texture *[18];
-
-    for(int i=0;i<6;i++)
-    {
-
-       std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
-       std::string filePath2{"../img/attack" + std::to_string(i+1) + ".bmp"};
-
-       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
-       enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
-    }
-
-    for(int i=0;i<18;i++)
-    {
-       std::string filePath3{"../img/Explosion" + std::to_string(i+1) + ".bmp"};
-
-       enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
-    }
-    
-    
-
     texture_rect;
     texture_rect.x = 350;  //the x coordinate
     texture_rect.y = 100; // the y coordinate
@@ -167,19 +141,65 @@ bool Renderer::loadMedia()
     //Loading success flag
     bool success = true;
 
-    //Load splash image
+    //Load  images
     background_surface = SDL_LoadBMP( "../img/skycity_background.bmp" );
+    aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
+
     if( background_surface == NULL )
     {
         printf( "Unable to load image %s! SDL Error: %s\n", "img/skycity_background.bmp", SDL_GetError() );
         success = false;
     }
-    else
+    if( aircraft_texture == NULL )
     {
-      std::cout<<"LOAD IMAGES SUCCESS";
+        printf( "Unable to load image %s! SDL Error: %s\n", "img/gun5.bmp", SDL_GetError() );
+        success = false;
     }
 
-     
+    enemy_textures= new SDL_Texture *[6];
+    enemy_attack_textures= new SDL_Texture *[6];
+    enemy_explode_textures= new SDL_Texture *[18];
+
+    for(int i=0;i<6;i++)
+    {
+
+       std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
+       std::string filePath2{"../img/attack" + std::to_string(i+1) + ".bmp"};
+
+       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
+       enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
+
+      if( enemy_textures[i] == NULL )
+      {
+        printf( "Unable to load image %s! SDL Error: %s\n", filePath.c_str(), SDL_GetError() );
+        success = false;
+      }
+      if( enemy_attack_textures[i] == NULL )
+      {
+        printf( "Unable to load image %s! SDL Error: %s\n", filePath2.c_str(), SDL_GetError() );
+        success = false;
+      }
+    }
+
+    for(int i=0;i<18;i++)
+    {
+       std::string filePath3{"../img/Explosion" + std::to_string(i+1) + ".bmp"};
+
+       enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
+
+      if( enemy_explode_textures[i] == NULL )
+      {
+        printf( "Unable to load image %s! SDL Error: %s\n", filePath3.c_str(), SDL_GetError() );
+        success = false;
+      }
+    }
+    
+
+    if(success)
+    {
+      std::cout<<"LOAD IMAGES SUCCESS"<<std::endl;
+    }
+
 
     return success;
 }

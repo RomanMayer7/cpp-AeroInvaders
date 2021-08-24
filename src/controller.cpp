@@ -22,6 +22,7 @@ void Controller::HandleInput(bool &running) const {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
+        
         case SDLK_SPACE:
                           //std::cout << "SPACE PRESSED.\n";
                           player_manager->fireMissile(player->getLocX());

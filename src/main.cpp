@@ -16,21 +16,15 @@ int main() {
 
   //CREATE RENDERER INSTANCE
   Renderer* renderer=new Renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
-  //Load Media
- //renderer.loadMedia();
-  //PlayerSprite* ps = renderer.aircraftSprite_three;
-  //Controller controller(ps);
+
   
   GameManager game_manager(kScreenWidth, kScreenHeight,renderer,kMsPerFrame);
   game_manager.init();
   game_manager.newGame();
   game_manager.run();
 
-  //Game game(kGridWidth, kGridHeight);
-  //game.Run(controller, renderer, kMsPerFrame);
 
   std::cout << "Game has terminated successfully!\n";
-  //std::cout << "Score: " << game.GetScore() << "\n";
-  //std::cout << "Size: " << game.GetSize() << "\n";
+
   return 0;
 }

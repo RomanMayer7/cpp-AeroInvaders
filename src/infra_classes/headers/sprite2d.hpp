@@ -1,6 +1,7 @@
 
 #pragma once
 #include "./sprite.hpp"
+#include <memory>
  
  class Sprite2D : public Sprite
 {
@@ -11,7 +12,10 @@
    int locy;
 
   public:
-   RColor* color;
+   //----Refactor Code to use Smart Pointers----
+   //RColor* color;
+   std::shared_ptr<RColor> color;
+
    bool fill;
 
    bool getFill()
@@ -22,12 +26,17 @@
    {
     fill = b;
    }
-
-   void setColor(RColor* c) 
+   
+   //----Refactor Code to use Smart Pointers----
+   // void setColor(RColor* c) 
+   void setColor(std::shared_ptr<RColor> c )
    {
-   color = c;
+     color = c;
    }
-   RColor* getColor()
+
+   //----Refactor Code to use Smart Pointers----
+   //RColor* getColor()
+   std::shared_ptr<RColor> getColor()
    {
     return color;
    }

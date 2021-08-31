@@ -19,12 +19,18 @@
 
   private:
 
-   PlayerSprite* gun; // player's gun/aircraft
-   Renderer* renderer;
+   //----Refactor Code to use Smart Pointers----
+   //PlayerSprite* gun; // player's gun/aircraft
+   //Renderer* renderer;
+   std::shared_ptr<PlayerSprite> gun; // player's gun/aircraft
+   std::shared_ptr<Renderer> renderer;
+
    int gun_width; // width of gun
    int gun_height;
    
-    MissileSprite* missile[3];
+   //----Refactor Code to use Smart Pointers----
+   //MissileSprite* missile[3];
+   std::vector<std::shared_ptr<MissileSprite>> missile;
   
    int width, height; // game window  dimensions
    int min_x, max_x; // min and max x coords
@@ -38,15 +44,23 @@
    int energy;
    int maxEnergy;
    int energyDec;
-   RColor* MISSILE_COLOR; //Red Color by Default
+
+   //----Refactor Code to use Smart Pointers----
+   //RColor* MISSILE_COLOR; //Red Color by Default
+   std::shared_ptr<RColor> MISSILE_COLOR; //Red Color by Default
 
   public:
+   //----Refactor Code to use Smart Pointers----
 
-   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
-                    /* ,Intersect** target2*/ );
+   // PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
+   //                  /* ,Intersect** target2*/ );
+   // PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target);
 
+   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,std::shared_ptr<Renderer> _renderer,
+                 std::vector<std::shared_ptr<Intersect>> target /* ,Intersect** target2*/ );
 
-   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target);
+   PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,std::shared_ptr<Renderer> _renderer,
+                 std::vector<std::shared_ptr<EnemySprite>> target);
     
    void newGame();
   // move gun to the given x coordinate
@@ -59,9 +73,16 @@
 
   // Paint all sprites associated with gun
   // also paint status display for amount of energy left
-   void paint(Renderer* g);
+
+   //----Refactor Code to use Smart Pointers----
+   //void    void paint(Renderer* g);
+   void paint(std::shared_ptr<Renderer> g);
+
   // accessor method for player's sprite instance
-   PlayerSprite* getGun();
+   //----Refactor Code to use Smart Pointers----
+   //PlayerSprite* getGun();
+   std::shared_ptr<PlayerSprite> getGun();
+
    int getGunY();
    int getGunX();
    void setEnergyDec(int _energyDec);

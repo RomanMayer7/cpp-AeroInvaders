@@ -1,13 +1,14 @@
 #pragma once
 #include "../headers/renderer.h"
 #include "../infra_classes/headers/enemy_sprite.hpp"
+#include <memory>
 
 //Forward Declare classes
 class GameManager;
 class PlayerManager;
 class EnemySprite;
 
-class EnemyManager
+class EnemyManager :public std::enable_shared_from_this<EnemyManager>
 {
   public:
   int width, height; // GAME WINDOW dimensions
@@ -15,9 +16,15 @@ class EnemyManager
 
   int enemiesKilled; // counter of enemies killed
   int level; 
-  Renderer* renderer;
-  PlayerManager* pm;
-  GameManager* _gm;
+
+  //----Refactor Code to use Smart Pointers----
+  // Renderer* renderer;
+  // PlayerManager* pm;
+   GameManager* _gm;
+  std::shared_ptr<Renderer> renderer;
+  std::shared_ptr<PlayerManager> pm;
+  //std::shared_ptr<GameManager> _gm;
+
   int startLevel;
   int maxLevel;
    // kill 13 ufos to reach the next level
@@ -25,13 +32,20 @@ class EnemyManager
   static constexpr int NUM_OF_ENEMIES= 9;
   bool playSound = false;
   
-  EnemyManager(int _startLevel, int _maxLevel, int _width, int _height,Renderer* _renderer,GameManager* gm);
+    //----Refactor Code to use Smart Pointers----
+  //EnemyManager(int _startLevel, int _maxLevel, int _width, int _height,Renderer* _renderer,GameManager* gm);
+  EnemyManager(int _startLevel, int _maxLevel, int _width, int _height,std::shared_ptr<Renderer> _renderer,GameManager* gm/*std::shared_ptr<GameManager> gm*/);
 
    // allow the EnemyManager class to communicate with the PlayerManger
-   void initialize(PlayerManager* pm);
-
+   //----Refactor Code to use Smart Pointers----
+   //void initialize(PlayerManager* pm);
+   void initialize(std::shared_ptr<PlayerManager> pm);
+   void InitializeManager();
+  
   // accessor method, so the missile knows where the targets are!
-   EnemySprite** getEnemies();
+  //----Refactor Code to use Smart Pointers----
+  //EnemySprite** getEnemies();
+  std::vector<std::shared_ptr<EnemySprite>> getEnemies();
 
   // This method tells the EnemySprite class where
   // the PlayerSprite is (so the EnemySprites know if they’ve collided with it)
@@ -52,9 +66,14 @@ class EnemyManager
      
    private:
       //Group of Enemies
-      EnemySprite** enemies;
-      
+      //----Refactor Code to use Smart Pointers----
+      //EnemySprite** enemies;
+      std::vector<std::shared_ptr<EnemySprite>> enemies;
+
+      //----Refactor Code to use Smart Pointers----
       // set enemy at a random screen location
-      void initializePosition(Moveable* m);
+      // void initializePosition(Moveable* m);
+      void initializePosition(std::shared_ptr<Moveable> m);
+
 
 };

@@ -1,7 +1,9 @@
 #include "headers/bitmap_sprite.hpp"
 #include <iostream>
-
-		 BitmapSprite::BitmapSprite(int x,int y,SDL_Rect _texture_rect, SDL_Texture *_texture_img)
+     
+     //----Refactor Code to use Smart Pointers----
+		 //BitmapSprite::BitmapSprite(int x,int y,SDL_Rect _texture_rect, SDL_Texture *_texture_img)
+     BitmapSprite::BitmapSprite(int x,int y,SDL_Rect _texture_rect, std::shared_ptr<SDL_Texture> _texture_img)
         {
 
 		    locx = x;
@@ -35,11 +37,14 @@
               //texture_rect.y = locy; // the y coordinate
          }
 
-         //render the sprite
-	     void BitmapSprite::paint_g(SDL_Renderer *renderer )
+        //render the sprite
+        //----Refactor Code to use Smart Pointers----
+	      //void BitmapSprite::paint_g(SDL_Renderer *renderer )
+        void BitmapSprite::paint_g(std::shared_ptr<SDL_Renderer> renderer ) 
          {
            //std::cout << "BitmapManager::paint().\n";
-             SDL_RenderCopy(renderer, texture_img, NULL, &texture_rect);
+             //SDL_RenderCopy(renderer, texture_img, NULL, &texture_rect);
+             SDL_RenderCopy(renderer.get(), texture_img.get(), NULL, &texture_rect);
                // Update Screen
                // SDL_RenderPresent(renderer);
          }

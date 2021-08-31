@@ -1,8 +1,9 @@
 #include "headers/bitmap_loop.hpp"
 #include <iostream>
 
-
-   BitmapLoop::BitmapLoop(int x, int y ,SDL_Rect _texture_rect,SDL_Texture**_texture_images,int _num_of_images)
+  //----Refactor Code to use Smart Pointers----
+  //BitmapLoop::BitmapLoop(int x, int y ,SDL_Rect _texture_rect,SDL_Texture**_texture_images,int _num_of_images)
+   BitmapLoop::BitmapLoop(int x, int y ,SDL_Rect _texture_rect, std::vector<std::shared_ptr<SDL_Texture>>_texture_images,int _num_of_images)
    {
 
     	locx = x;
@@ -15,11 +16,11 @@
       visible=true;
       active=true;
 
-		  if (texture_images != NULL) 
-        {
-          texture_rect.x = x;  //the x coordinate
-          texture_rect.y = y; // the y coordinate
-        }
+		  // if (texture_images != NULL) 
+      //   {
+           texture_rect.x = x;  //the x coordinate
+           texture_rect.y = y; // the y coordinate
+        // }
   
          currentImage = 0;
 
@@ -37,8 +38,10 @@
     }
     updatePosition();
   }
-
-   void BitmapLoop::paint_g(SDL_Renderer *renderer ) 
+   
+  //----Refactor Code to use Smart Pointers----
+  //void BitmapLoop::paint_g(SDL_Renderer *renderer )
+   void BitmapLoop::paint_g(std::shared_ptr<SDL_Renderer> renderer ) 
    {
      //std::cout<<"bitmap_loop render777";
       if (visible) 
@@ -48,13 +51,23 @@
         {
            texture_rect.w=51;
            texture_rect.h=92;
-          SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+           width=texture_rect.w;
+           height=texture_rect.h;
+           
+          //----Refactor Code to use Smart Pointers----
+          //SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+          //SDL_Renderer* rddr=renderer.get();
+          SDL_RenderCopy(renderer.get(), texture_images.at(currentImage).get(), NULL, &texture_rect);
         }
         else
         {
            texture_rect.w=130;
            texture_rect.h=125;
-           SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+           width=texture_rect.w;
+           height=texture_rect.h;
+           //----Refactor Code to use Smart Pointers----
+           //SDL_RenderCopy(renderer, texture_images[currentImage], NULL, &texture_rect);
+           SDL_RenderCopy(renderer.get(), texture_images[currentImage].get(), NULL, &texture_rect);
         }
 
       }

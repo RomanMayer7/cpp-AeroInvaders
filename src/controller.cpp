@@ -8,7 +8,9 @@ Controller::Controller()
 
 }
 
-Controller::Controller(PlayerManager* pm)
+//----Refactor Code to use Smart Pointers----
+//Controller::Controller(PlayerManager* pm)
+Controller::Controller(std::shared_ptr<PlayerManager> pm)
 {
   player=pm->getGun();
   player_manager =pm;

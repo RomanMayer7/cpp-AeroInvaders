@@ -10,7 +10,9 @@ class PlayerSprite : public BitmapSprite,public Moveable,public Intersect
 	//protected GunManager gm; // pointer to manager class
 public:
 
-  PlayerSprite(int _locx, int _locy, SDL_Rect _texture_rect, SDL_Texture *_texture_img);
+  //----Refactor Code to use Smart Pointers----------------------------------------------------------
+  //PlayerSprite(int _locx, int _locy, SDL_Rect _texture_rect, SDL_Texture *_texture_img);
+  PlayerSprite(int _locx, int _locy, SDL_Rect _texture_rect, std::shared_ptr<SDL_Texture>_texture_img);
   PlayerSprite();
 
 // the following methods implement Moveable:

@@ -1,11 +1,13 @@
 #include "headers/player_sprite.hpp"
 
 
-PlayerSprite::PlayerSprite(int _locx,int _locy, SDL_Rect _texture_rect, SDL_Texture *_texture_img)
-                          :BitmapSprite(_locx,_locy,_texture_rect,_texture_img)
+//PlayerSprite::PlayerSprite(int _locx,int _locy, SDL_Rect _texture_rect, SDL_Texture *_texture_img)
+//                         :BitmapSprite(_locx,_locy,_texture_rect,_texture_img)
+PlayerSprite::PlayerSprite(int _locx, int _locy, SDL_Rect _texture_rect,std::shared_ptr<SDL_Texture>_texture_img)
+:BitmapSprite(_locx,_locy,_texture_rect,_texture_img)
   {
-   	  //super(i);
-	  //this.gm = gm;
+      std::cout << "PlayerSprite::ctor().\n";
+
   }
 
 PlayerSprite::PlayerSprite()

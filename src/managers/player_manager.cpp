@@ -2,8 +2,11 @@
 
 
  //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
- PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
-                    /* ,Intersect** target2*/ ) 
+ //----Refactor Code to use Smart Pointers----
+ /*PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,Intersect** target
+                     ,Intersect** target2 ) */
+  PlayerManager :: PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,std::shared_ptr<Renderer> _renderer,
+                 std::vector<std::shared_ptr<Intersect>> target /* ,Intersect** target2*/ )
     {
     
     
@@ -14,14 +17,19 @@
     height = _windowHeight;
     renderer=_renderer;
     
-    MISSILE_COLOR=new RColor(255,0,0,255);
+    //----Refactor Code to use Smart Pointers----
+    //MISSILE_COLOR=new RColor(255,0,0,255);
+    MISSILE_COLOR=std::make_shared<RColor>(255,0,0,255);
     
 
     //*****************************************************************
     //SDL_Rect player_texture_rect;
     //player_texture_rect.w = 51; //the width of the texture
     //player_texture_rect.h = 92; //the height of the texture
-    gun=new PlayerSprite( 600,600,renderer->texture_rect,renderer->aircraft_texture);
+
+    //----Refactor Code to use Smart Pointers----
+    //gun=new PlayerSprite( 600,600,renderer->texture_rect,renderer->aircraft_texture);
+    gun=std::make_shared<PlayerSprite>( 600,600,renderer->texture_rect,renderer->aircraft_texture);
 
     //*****************************************************************
 
@@ -44,26 +52,32 @@
 
     for (int i = 0; i < 3; i++)
      {
-      missile[i] = new MissileSprite(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
+      //----Refactor Code to use Smart Pointers----
+      // missile[i] = new MissileSprite(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
+      //                                height - gun_height,0, target /*, target2*/);
+         missile[i] = std::make_shared<MissileSprite>(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
                                      height - gun_height,0, target /*, target2*/);
      }
      
   }
 
 //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
-
-   PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target)
-    {
-    
-    
-   std::cout << "PlayerManager().\n";
+   //----Refactor Code to use Smart Pointers----
+   //PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,Renderer* _renderer,EnemySprite** target)
+  PlayerManager::PlayerManager(int _maxEnergy, int _energyDec, int _windowWidth, int _windowHeight,std::shared_ptr<Renderer> _renderer,
+                 std::vector<std::shared_ptr<EnemySprite>> target)
+   {
+   
+    std::cout << "PlayerManager::ctor().\n";
     maxEnergy = _maxEnergy;
     energyDec = _energyDec;
     width = _windowWidth;
     height = _windowHeight;
     renderer=_renderer;
     
-    MISSILE_COLOR=new RColor(255,0,0,255);
+    //----Refactor Code to use Smart Pointers----
+    //MISSILE_COLOR=new RColor(255,0,0,255);
+    MISSILE_COLOR=std::make_shared<RColor>(255,0,0,255);
     
 
     //*****************************************************************
@@ -71,8 +85,10 @@
     //SDL_Rect player_texture_rect;
     //player_texture_rect.w = 51; //the width of the texture
     //player_texture_rect.h = 92; //the height of the texture
-
-    gun=new PlayerSprite( 600,600,renderer->texture_rect,renderer->aircraft_texture);
+    
+    //----Refactor Code to use Smart Pointers----
+    //gun=new PlayerSprite( 600,600,renderer->texture_rect,renderer->aircraft_texture);
+    gun=std::make_shared<PlayerSprite>( 600,600,renderer->texture_rect,renderer->aircraft_texture);
 
 
     //*****************************************************************
@@ -92,13 +108,15 @@
     //std::cout << " height :"<<height<<" gun_height:"<<gun_height<<"\n";
 
     //INITIALIZE MISSLES for Player
-
     for (int i = 0; i < 3; i++)
      {
-      missile[i] = new MissileSprite(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
-                                     height - gun_height,0, target /*, target2*/);
+      //----Refactor Code to use Smart Pointers---
+      // missile[i] = new MissileSprite(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
+      //                                height - gun_height,0, target /*, target2*/);
+        missile.emplace_back(std::make_shared<MissileSprite>(MISSILE_WIDTH, MISSILE_HEIGHT,MISSILE_COLOR, MISSILE_SPEED,
+                                     height - gun_height,0, target /*, target2*/));
      }
-     
+     std::cout << " after INITIALIZE MISSLES for Player.\n";
   }
 //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**--*-*-*-**-*-*-*-*-*-*-*-*
 
@@ -182,8 +200,9 @@
   }
 
 
-
-   void PlayerManager::paint(Renderer* g)
+    //----Refactor Code to use Smart Pointers----
+   //void PlayerManager::paint(Renderer* g)
+  void PlayerManager::paint(std::shared_ptr<Renderer> g)
   {
     // TODO::if gun is hit, flash a red rectangle
     // instead of painting gun
@@ -211,7 +230,9 @@
 
 
   // accessor method for player's sprite instance
-   PlayerSprite* PlayerManager::getGun()
+  //----Refactor Code to use Smart Pointers----
+  // PlayerSprite* PlayerManager::getGun()
+   std::shared_ptr<PlayerSprite> PlayerManager::getGun()
    {
        return gun;
    }

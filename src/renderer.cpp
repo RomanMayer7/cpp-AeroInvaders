@@ -26,8 +26,10 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "Window can  be created.\n";
   }
 
+     //----Refactor Code to use Smart Pointers----
+    //background_renderer = SDL_CreateRenderer(sdl_window, -1, 0);
+    background_renderer=std::shared_ptr<SDL_Renderer>(SDL_CreateRenderer(sdl_window, -1, 0),SDL_DestroyRenderer);
 
-    background_renderer = SDL_CreateRenderer(sdl_window, -1, 0);
      if (nullptr == background_renderer) 
      {
        std::cerr << "Renderer could not be created.\n";
@@ -35,7 +37,11 @@ Renderer::Renderer(const std::size_t screen_width,
      }
 
     loadMedia();
-    background_texture = SDL_CreateTextureFromSurface(background_renderer, background_surface);
+     //----Refactor Code to use Smart Pointers----
+    //background_texture = SDL_CreateTextureFromSurface(background_renderer, background_surface);
+    background_texture=std::shared_ptr<SDL_Texture>(SDL_CreateTextureFromSurface(background_renderer.get(), background_surface.get()),SDL_DestroyTexture);
+    
+    
 
     texture_rect;
     texture_rect.x = 350;  //the x coordinate
@@ -78,9 +84,14 @@ void Renderer::Render()
   
   //std::cerr << "rrrrrrrrrrrrrrrrrrrrtr.\n";
  // Clear screen
-  SDL_SetRenderDrawColor(background_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
- SDL_RenderClear(background_renderer);
- SDL_RenderCopy(background_renderer, background_texture, NULL, NULL);
+ 
+ //----Refactor Code to use Smart Pointers----
+//   SDL_SetRenderDrawColor(background_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+//  SDL_RenderClear(background_renderer);
+//  SDL_RenderCopy(background_renderer, background_texture, NULL, NULL);
+ SDL_SetRenderDrawColor(background_renderer.get(), 0x1E, 0x1E, 0x1E, 0xFF);
+ SDL_RenderClear(background_renderer.get());
+ SDL_RenderCopy(background_renderer.get(), background_texture.get(), NULL, NULL);
 
 
 
@@ -142,8 +153,11 @@ bool Renderer::loadMedia()
     bool success = true;
 
     //Load  images
-    background_surface = SDL_LoadBMP( "../img/skycity_background.bmp" );
-    aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
+     //----Refactor Code to use Smart Pointers----
+    //background_surface = SDL_LoadBMP( "../img/skycity_background.bmp" );
+    //aircraft_texture = IMG_LoadTexture(background_renderer, "../img/gun5.bmp");
+    background_surface=std::shared_ptr<SDL_Surface>(SDL_LoadBMP( "../img/skycity_background.bmp" ));
+    aircraft_texture=std::shared_ptr<SDL_Texture>(IMG_LoadTexture(background_renderer.get(), "../img/gun5.bmp"),SDL_DestroyTexture);
 
     if( background_surface == NULL )
     {
@@ -155,19 +169,23 @@ bool Renderer::loadMedia()
         printf( "Unable to load image %s! SDL Error: %s\n", "img/gun5.bmp", SDL_GetError() );
         success = false;
     }
-
-    enemy_textures= new SDL_Texture *[6];
-    enemy_attack_textures= new SDL_Texture *[6];
-    enemy_explode_textures= new SDL_Texture *[18];
+    
+     //----Refactor Code to use Smart Pointers----
+    // enemy_textures= new SDL_Texture *[6];
+    // enemy_attack_textures= new SDL_Texture *[6];
+    // enemy_explode_textures= new SDL_Texture *[18];
 
     for(int i=0;i<6;i++)
     {
 
        std::string filePath{"../img/ufo" + std::to_string(i+1) + ".bmp"};
        std::string filePath2{"../img/attack" + std::to_string(i+1) + ".bmp"};
-
-       enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
-       enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
+       
+       //----Refactor Code to use Smart Pointers----
+      //  enemy_textures[i] = IMG_LoadTexture(background_renderer, filePath.c_str());
+      //  enemy_attack_textures[i] = IMG_LoadTexture(background_renderer, filePath2.c_str());
+       enemy_textures.emplace_back(std::shared_ptr<SDL_Texture>(IMG_LoadTexture(background_renderer.get(), filePath.c_str()),SDL_DestroyTexture));
+       enemy_attack_textures.emplace_back(std::shared_ptr<SDL_Texture>(IMG_LoadTexture(background_renderer.get(), filePath2.c_str()),SDL_DestroyTexture));
 
       if( enemy_textures[i] == NULL )
       {
@@ -184,8 +202,10 @@ bool Renderer::loadMedia()
     for(int i=0;i<18;i++)
     {
        std::string filePath3{"../img/Explosion" + std::to_string(i+1) + ".bmp"};
-
-       enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
+       
+        //----Refactor Code to use Smart Pointers----
+       //enemy_explode_textures[i] = IMG_LoadTexture(background_renderer, filePath3.c_str());
+       enemy_explode_textures.emplace_back(std::shared_ptr<SDL_Texture>(IMG_LoadTexture(background_renderer.get(), filePath3.c_str()),SDL_DestroyTexture));
 
       if( enemy_explode_textures[i] == NULL )
       {
@@ -224,17 +244,21 @@ void Renderer::draw_rectangle(SDL_Surface* surface, int x, int y, int width, int
 }
 
 // Render rectangle
-void Renderer::fillRect(int locx,int locy,int width,int height,RColor &color)
+//----Refactor Code to use Smart Pointers----
+//void Renderer::fillRect(int locx,int locy,int width,int height,RColor &color)
+void Renderer::fillRect(int locx,int locy,int width,int height,std::shared_ptr<RColor> color)
 { 
   SDL_Rect block;
   block.w = width;
   block.h = height;
 
   //SDL_SetRenderDrawColor(background_renderer, 0xFF, 0xCC, 0x00, 0xFF);
-  SDL_SetRenderDrawColor(background_renderer, color.r, color.g, color.b, color.a);
+  //----Refactor Code to use Smart Pointers----
+  //SDL_SetRenderDrawColor(background_renderer.get(), color.r, color.g, color.b, color.a);
+  SDL_SetRenderDrawColor(background_renderer.get(), color->r, color->g, color->b, color->a);
   block.x = locx ;
   block.y = locy ;
   //std::cout << "Renderer::fillRect:"<<locx<<" locy:"<<locy<<" width:"<<width<<" height:"<<height<<" color r:"<<color.r<<"\n";
-  SDL_RenderFillRect(background_renderer, &block);
+  SDL_RenderFillRect(background_renderer.get(), &block);
 
 }

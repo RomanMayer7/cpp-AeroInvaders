@@ -1,7 +1,7 @@
 #include <iostream>
 #include "headers/controller.h"
 #include "managers/game_manager.hpp"
-
+#include <memory>
 
 
 
@@ -15,14 +15,15 @@ int main() {
   constexpr std::size_t kGridHeight{32};
 
   //CREATE RENDERER INSTANCE
-  Renderer* renderer=new Renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
-
+  //----Refactor Code to use Smart Pointers----
+  //Renderer* renderer=new Renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
+  std::shared_ptr<Renderer> renderer = std::make_shared<Renderer> (kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
   
-  GameManager game_manager(kScreenWidth, kScreenHeight,renderer,kMsPerFrame);
-  game_manager.init();
-  game_manager.newGame();
-  game_manager.run();
 
+   GameManager game_manager(kScreenWidth, kScreenHeight,renderer,kMsPerFrame);
+   game_manager.init();
+   game_manager.newGame();
+   game_manager.run();
 
   std::cout << "Game has terminated successfully!\n";
 

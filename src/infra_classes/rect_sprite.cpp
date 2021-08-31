@@ -2,7 +2,9 @@
      
 	 RectSprite::RectSprite(){}
 
-	 RectSprite::RectSprite(int w,int h,RColor* c)
+    //----Refactor Code to use Smart Pointers----
+	//RectSprite::RectSprite(int w,int h,RColor* c)
+	RectSprite::RectSprite(int w,int h,std::shared_ptr<RColor> c)
 	{
 	  locx = 0;
 	  locy = 0;
@@ -11,7 +13,10 @@
 	  color = c;
 	  restore();
 	}
-	 RectSprite::RectSprite(int x,int y,int w,int h,RColor* c)
+
+	//----Refactor Code to use Smart Pointers----
+	 //RectSprite::RectSprite(int x,int y,int w,int h,RColor* c)
+	 RectSprite::RectSprite(int x,int y,int w,int h,std::shared_ptr<RColor> c)
 	{
 	  locx = x;
 	  locy = y;
@@ -26,8 +31,10 @@
 	{
 	// does nothing
 	}
-	// check if sprite's visible before painting
-	void RectSprite::paint(Renderer* r)
+    
+	//----Refactor Code to use Smart Pointers----
+	//void RectSprite::paint(Renderer* r)
+	void RectSprite::paint(std::shared_ptr<Renderer> r)
 	 {
 		 //std::cout << "RectSprite::paint().\n";
 	   if (visible)
@@ -36,7 +43,10 @@
 	     if (fill)
 	     {
 			//std::cout << "RectSprite::paint():fill locx:"<<locx<<" locy:"<<locy<<" width:"<<width<<" height:"<<height<<" color r:"<<color->r<<"\n";
-	       r->fillRect(locx,locy,width,height,*color);
+           
+		   //----Refactor Code to use Smart Pointers----
+	       //r->fillRect(locx,locy,width,height,*color);
+		   r->fillRect(locx,locy,width,height,color);
 		   
 		   //SDL_RenderPresent(r->background_renderer);
 	      }

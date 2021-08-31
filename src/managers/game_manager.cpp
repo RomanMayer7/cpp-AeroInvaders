@@ -1,8 +1,10 @@
 #include "game_manager.hpp"
 
-GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_t _target_frame_duration)
+//----Refactor Code to use Smart Pointers----
+//GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_t _target_frame_duration)
+GameManager::GameManager(int _width, int _height,const std::shared_ptr<Renderer> _renderer,std::size_t _target_frame_duration)
 	{
-		 std::cout << "GameManager().\n";
+		 std::cout << " ctor inGameManager().\n";
           renderer=_renderer;
 		  width=_width;
 		  height =_height;
@@ -11,20 +13,32 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 
 	void GameManager::init()
     {
-       std::cout << "GameManager::init().\n";
+     std::cout << "GameManager::init().\n";
 
-	
     //TODO:LOAD IMAGES
     //showStatus("Loading Images -- WAIT!");
 	loadImages();
 	
     //TODO:LOAD AUDIO
+    
+	//----Refactor Code to use Smart Pointers----
+    //em =new EnemyManager(5,MAX_LEVEL,width,height,renderer,this);
 
-    em =new EnemyManager(5,MAX_LEVEL,width,height,renderer,this);
+	//std::cout << "before EnemyManager.\n";
+    em = std::make_shared<EnemyManager>(5,MAX_LEVEL,width,height,renderer,this);
+	em->InitializeManager();
+    //std::cout << "after EnemyManager.\n";
+
 	//pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,reinterpret_cast<Intersect**>(em->getEnemies()) );
-	pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,em->getEnemies() );
 
-	controller=new Controller(pm);
+	//----Refactor Code to use Smart Pointers----
+	//pm = new PlayerManager(MAX_ENERGY,5,width,height,renderer,em->getEnemies() );
+	pm = std::make_shared<PlayerManager>(MAX_ENERGY,5,width,height,renderer,em->getEnemies() );
+    
+	//----Refactor Code to use Smart Pointers----
+	//controller=new Controller(pm);
+
+	controller=std::make_shared<Controller>(pm);
 	
 	em->initialize(pm); // initialize gun parameters
 
@@ -131,8 +145,12 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 		      pm->paint(renderer);  //draw player's aircraft
 			  em->paintAll();       //draw enemy aircrafts
 
+
               // Update Screen
-              SDL_RenderPresent(renderer->background_renderer);
+			  //----Refactor Code to use Smart Pointers----
+              //SDL_RenderPresent(renderer->background_renderer);
+			  SDL_RenderPresent(renderer->background_renderer.get());
+
 		
 		      // draw status info
 
@@ -189,3 +207,9 @@ GameManager::GameManager(int _width, int _height, Renderer* _renderer,std::size_
 		    //TODO:: showStatus("Game Stopped");
 
 		  }
+
+		// std::shared_ptr<GameManager> GameManager::getGameManager()
+		//    { 
+		// 	  std::cout << "GameManager::getGameManager().\n";
+		// 	  return shared_from_this();
+		//    }

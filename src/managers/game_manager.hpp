@@ -5,6 +5,7 @@
 #include "enemy_manager.hpp"
 #include "player_manager.hpp"
 //#include "enemy_manager.hpp"
+#include <memory>
 
 #define REFRESH_RATE 60 // in ms
 #define INTRO 0 // intro screen
@@ -20,7 +21,9 @@
   class PlayerManager;
   class Controller;
 
+//----Refactor Code to use Smart Pointers----
  class GameManager
+ //class GameManager:public std::enable_shared_from_this<GameManager>
  {
 
     //int StartMsg=90;//milliseconds to show starting message
@@ -34,12 +37,16 @@
 	bool playing; 
     int score;
 	
-    
-    Renderer* renderer;
+    //----Refactor Code to use Smart Pointers----
+    /*Renderer* renderer;
 	Controller* controller;
-    //Controller& controller;
 	PlayerManager* pm;
 	EnemyManager* em;
+	*/
+	std::shared_ptr<Renderer> renderer;
+	std::shared_ptr<Controller> controller;
+	std::shared_ptr<PlayerManager> pm;
+	std::shared_ptr<EnemyManager> em;
 
 	int numLanded; // num of enemies landed
 	
@@ -62,8 +69,9 @@
 	//***********************************************************************************************************
 
     public:
-
-	GameManager(int _width, int _height, Renderer* _renderer,std::size_t _target_frame_duration);
+    //----Refactor Code to use Smart Pointers----
+	//GameManager(int _width, int _height, Renderer* _renderer,std::size_t _target_frame_duration);
+	GameManager(int _width, int _height,const std::shared_ptr<Renderer> _renderer,std::size_t _target_frame_duration);
     int currentLevel;
 	void init();
 	void MusicPlayer();
@@ -86,4 +94,5 @@
 	// the Video Game Loop
 	 void run();
 	 void stop();
+	 std::shared_ptr<GameManager> getGameManager();
 };

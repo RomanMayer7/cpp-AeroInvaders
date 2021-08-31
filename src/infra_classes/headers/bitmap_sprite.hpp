@@ -12,14 +12,21 @@ class BitmapSprite :public Sprite2D
 		 // image dimensions
 		 int width,height; 
 
-		 SDL_Texture *texture_img=NULL; // the bitmap
+         //----Refactor Code to use Smart Pointers----
+		 //SDL_Texture *texture_img=NULL; // the bitmap
+		 std::shared_ptr<SDL_Texture> texture_img=NULL; // the bitmap
+
          SDL_Rect texture_rect; //bitmap dimensions
 
     public:
-		// BitmapSprite(const SDL_Texture & _texture_img);
-		 BitmapSprite(int x,int y,SDL_Rect _texture_rect, SDL_Texture *_texture_img);
+		//----Refactor Code to use Smart Pointers----
+		 //BitmapSprite(int x,int y,SDL_Rect _texture_rect, SDL_Texture *_texture_img);
+		 BitmapSprite(int x,int y,SDL_Rect _texture_rect, std::shared_ptr<SDL_Texture> _texture_img);
 		 BitmapSprite();
 		 void setSize(int w,int h);
 		 void update();
-	     void paint_g(SDL_Renderer *renderer);
+		//----Refactor Code to use Smart Pointers----
+	    //void paint_g(SDL_Renderer *renderer);
+        void paint_g(std::shared_ptr<SDL_Renderer> renderer ); 
+	    
 };

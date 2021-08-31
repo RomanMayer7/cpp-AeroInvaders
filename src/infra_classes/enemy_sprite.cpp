@@ -63,11 +63,15 @@ void EnemySprite::startExplode()
          state = EXPLODE;
        }
 
-
-EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
-         SDL_Texture** enemyImages, SDL_Texture** attackImages,
-         SDL_Texture** explodeImages, int _max_x, int _max_y, EnemyManager* _em,GameManager* _gm)
-        :BitmapLoop(x,y,_texture_rect,enemyImages,_num_of_images)
+ //----Refactor Code to use Smart Pointers----
+// EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
+//          SDL_Texture** enemyImages, SDL_Texture** attackImages,
+//          SDL_Texture** explodeImages, int _max_x, int _max_y, EnemyManager* _em,GameManager* _gm)
+//         :BitmapLoop(x,y,_texture_rect,enemyImages,_num_of_images)
+  EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
+          std::vector<std::shared_ptr<SDL_Texture>> enemyImages, std::vector<std::shared_ptr<SDL_Texture>> attackImages,
+          std::vector<std::shared_ptr<SDL_Texture>> explodeImages, int _max_x, int _max_y,
+          std::shared_ptr<EnemyManager> _em,GameManager* _gm/*std::shared_ptr<GameManager> _gm*/)
         {
     
            max_x = _max_x;
@@ -75,6 +79,7 @@ EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
            em = _em;
            game = _gm;
 
+           num_of_images=_num_of_images;
            normal_images = enemyImages;
            attack_images = attackImages;
            explode_images = explodeImages;
@@ -84,8 +89,10 @@ EnemySprite::EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
 
 EnemySprite::EnemySprite() {}
         
-        // finish initializing info about the player's gun
-void EnemySprite::initialize(PlayerManager* pm)
+ //----Refactor Code to use Smart Pointers----
+ // finish initializing info about the player's gun
+ //void EnemySprite::initialize(PlayerManager* pm)
+ void EnemySprite::initialize(std::shared_ptr<PlayerManager> pm)
         {
          target = pm->getGun(); // refers to gun sprite
          player_y = pm->getGunY(); // get gun y-coordinate
@@ -132,6 +139,9 @@ void EnemySprite::init()
        //--------------------this implements the 'State Machine'---------------------------------
 void EnemySprite::update()
        {
+
+          //std::cout<<"locy:::"<<locy<<std::endl;
+          //std::cout<<"Width:::"<<width<<std::endl;
          // if enemy hits target
          if ((locy + height >= player_y) && target->intersect(locx, locy, locx + width, locy + height)) 
               {

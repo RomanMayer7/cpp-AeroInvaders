@@ -2,9 +2,11 @@
 
  MissileSprite::MissileSprite(){}
 
-
- MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy, int _start_y,int _stop_y,Intersect** _target):
-                RectSprite(w,h,c)
+ //----Refactor Code to use Smart Pointers----------------------------------------------------------
+ //MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy, int _start_y,int _stop_y,Intersect** _target):
+                //RectSprite(w,h,c)
+	MissileSprite::MissileSprite(int w,int h,std::shared_ptr<RColor> c,int _vy, int _start_y,int _stop_y,
+	                             std::vector<std::shared_ptr<Intersect>>_target): RectSprite(w,h,c)
        {
 	      setFill(true); // fill rect sprite
 	      vy = _vy; // initialize speed
@@ -15,9 +17,11 @@
 	      Constructor=1;
 	      suspend();
 	   }
-
-	   	 MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy, int _start_y,int _stop_y,EnemySprite** _target):
-                RectSprite(w,h,c)
+         //----Refactor Code to use Smart Pointers----------------------------------------------------------
+	   	 //MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy, int _start_y,int _stop_y,EnemySprite** _target):
+         //       RectSprite(w,h,c)
+	 MissileSprite::MissileSprite(int w,int h,std::shared_ptr<RColor> c,int _vy, int _start_y,int _stop_y,
+	                              std::vector<std::shared_ptr<EnemySprite>>_target): RectSprite(w,h,c)
        {
 	      setFill(true); // fill rect sprite
 	      vy = _vy; // initialize speed
@@ -30,8 +34,11 @@
 	   }
 
 	//*********************Constructor for one target(player's ship)
-	  MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy,int _start_y,int _stop_y,Intersect* _target):
-	  RectSprite(w,h,c)
+	//----Refactor Code to use Smart Pointers----------------------------------------------------------
+	  //MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy,int _start_y,int _stop_y,Intersect* _target):
+	  //RectSprite(w,h,c)
+	 MissileSprite::MissileSprite(int w,int h,std::shared_ptr<RColor> c,int _vy,int _start_y,int _stop_y,
+	                              std::shared_ptr<Intersect> _target): RectSprite(w,h,c)
         {
 			setFill(true); // fill rect sprite
 			vy = _vy; // initialize speed
@@ -44,9 +51,11 @@
 		}
 
 	//******************************** Constructor for two target array's
-	  MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy,int _start_y,int _stop_y,
-			       Intersect** _target,Intersect** _target2):
-				   RectSprite(w,h,c)
+	//----Refactor Code to use Smart Pointers----------------------------------------------------------
+	//  MissileSprite::MissileSprite(int w,int h,RColor*  c,int _vy,int _start_y,int _stop_y,
+	//		       Intersect** _target,Intersect** _target2): RectSprite(w,h,c)
+	MissileSprite::MissileSprite(int w,int h,std::shared_ptr<RColor>  c,int _vy,int _start_y,int _stop_y,
+			       std::vector<std::shared_ptr<Intersect>> _target ,std::vector<std::shared_ptr<Intersect>>_target2): RectSprite(w,h,c)
         {
 	
 			setFill(true); // fill rect sprite
@@ -68,8 +77,10 @@
 	   locy = start_y;
 	   restore();	
 	}
-
-	 void  MissileSprite::changeoneTarget(Intersect* target)
+     
+	 //----Refactor Code to use Smart Pointers----------------------------
+	 //void  MissileSprite::changeoneTarget(Intersect* target)
+	 void MissileSprite::changeoneTarget(std::shared_ptr<Intersect> target)
      {
 	    onetarget=target;	
 	 }
@@ -77,7 +88,8 @@
 	 void  MissileSprite::update() 
     {
 		 // std::cout<<"MissileSprite::update()";
-	   if ( active && ((e_target!=nullptr) ||(onetarget!=nullptr) ) )
+	   //if ( active && ((e_target!=nullptr) ||(onetarget!=nullptr) ) )
+	   if ( active && ((!e_target.empty()) ||(onetarget!=nullptr) ) )
          {
 	         // Move Missile
 	         locy += vy;

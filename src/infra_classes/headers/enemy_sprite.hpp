@@ -33,17 +33,26 @@
     int state;
     protected:  
     //Enemy state Image arrays
-       
-       SDL_Texture** normal_images;
-       SDL_Texture** attack_images;
-       SDL_Texture** explode_images;
+        //----Refactor Code to use Smart Pointers----
+      //  SDL_Texture** normal_images;
+      //  SDL_Texture** attack_images;
+      //  SDL_Texture** explode_images;
+       std::vector<std::shared_ptr<SDL_Texture>> normal_images;
+       std::vector<std::shared_ptr<SDL_Texture>> attack_images;
+       std::vector<std::shared_ptr<SDL_Texture>> explode_images;
        int explosion_counter;
-       EnemyManager* em;  
+        //----Refactor Code to use Smart Pointers----
+      //EnemyManager* em; 
+      std::shared_ptr<EnemyManager> em; 
 
        int max_x, max_y; // max coords of this Enemy
-       inline static Intersect* target; // refers to the player
+        //----Refactor Code to use Smart Pointers----
+       //inline static Intersect* target; // refers to the player
+       inline static std::shared_ptr<Intersect>  target; // refers to the player
        inline static int player_y; // the y-coord of the player
-       GameManager* game; // ptr to game manager 
+       //----Refactor Code to use Smart Pointers----
+       GameManager* game; // ptr to game manager
+       //std::shared_ptr<GameManager> game; // ptr to game manager
 
        void landingRoutine();
        void startStandby();
@@ -57,15 +66,24 @@
        void startExplode();
 
        public:
-
-        EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
-         SDL_Texture** enemyImages, SDL_Texture** attackImages,
-         SDL_Texture** explodeImages, int max_x, int max_y, EnemyManager* _em,GameManager* _gm);
+        
+        //----Refactor Code to use Smart Pointers----
+        // EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
+        //  SDL_Texture** enemyImages, SDL_Texture** attackImages,
+        //  SDL_Texture** explodeImages, int max_x, int max_y, EnemyManager* _em,GameManager* _gm);
+         EnemySprite(int x,int y,SDL_Rect _texture_rect,int _num_of_images,
+          std::vector<std::shared_ptr<SDL_Texture>> enemyImages, std::vector<std::shared_ptr<SDL_Texture>> attackImages,
+          std::vector<std::shared_ptr<SDL_Texture>> explodeImages, int _max_x, int _max_y,
+          std::shared_ptr<EnemyManager> _em,GameManager* _gm/*std::shared_ptr<GameManager> _gm*/);
 
         EnemySprite();
         
         // finish initializing info about the player's gun
-        static void initialize(PlayerManager* pm); 
+        //----Refactor Code to use Smart Pointers----
+        //static void initialize(PlayerManager* pm); 
+        static void initialize(std::shared_ptr<PlayerManager> pm);
+
+
         // implement Intersect interface:
         bool intersect(int x1, int y1, int x2, int y2);
         // this is called if a missile hits the alien

@@ -14,7 +14,7 @@ class Controller {
   //Controller(PlayerManager *pm);
   Controller( std::shared_ptr<PlayerManager> pm);
 
-  void HandleInput(bool &running/*, Snake &snake*/) const;
+  void HandleInput(bool &running) const;
 
   //----Refactor Code to use Smart Pointers----
   /* PlayerSprite* player;
